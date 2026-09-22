@@ -10,7 +10,8 @@ defmodule Duper.Application do
     children = [
       # Starts a worker by calling: Duper.Worker.start_link(arg)
       # {Duper.Worker, arg}
-      Duper.Results
+      Duper.Results,
+      {Duper.PathFinder, "."}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
