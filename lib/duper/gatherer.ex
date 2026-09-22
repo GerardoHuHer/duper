@@ -4,7 +4,7 @@ defmodule Duper.Gatherer do
   @me Gatherer
 
   def start_link(worker_count) do
-    GenServer.start_link(__MODULE__, worker_count, @me)
+    GenServer.start_link(__MODULE__, worker_count, name: @me)
   end
 
   def done() do
@@ -30,6 +30,10 @@ defmodule Duper.Gatherer do
   def handle_cast(:done, _woker_count = 1) do
     report_results()
     System.halt(0)
+  end
+
+  def handle_cast(:done, worker_count) do
+    {:noreply, worker_count - 1}
   end
 
   def handle_cast({:result, path, hash}, worker_count) do
